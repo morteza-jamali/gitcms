@@ -1,0 +1,79 @@
+import React, { useState } from 'react';
+import clsx from 'clsx';
+import styles from './TopBar.style';
+import Logo from '../Logo/Logo';
+import MenuIcon from '@material-ui/icons/Menu';
+import PropTypes from 'prop-types';
+import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
+import InputIcon from '@material-ui/icons/Input';
+import {
+  AppBar,
+  Toolbar,
+  makeStyles,
+  Badge,
+  Box,
+  Hidden,
+  IconButton
+} from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
+
+let _styles: any;
+
+export function TopBar(
+  layout: 'MAIN' | 'DASHBOARD',
+  onMobileNavOpen: typeof PropTypes.func = PropTypes.func,
+  ...rest: any
+) {
+  _styles = makeStyles(styles(layout))();
+
+  switch (layout) {
+    case 'MAIN':
+      return MainLayoutTopBar(rest);
+    case 'DASHBOARD':
+      return DashboardLayoutTopBar(onMobileNavOpen, rest);
+  }
+}
+
+const MainLayoutTopBar = (...rest: any) => (
+  <AppBar className={clsx(_styles.root, _styles)} elevation={0} {...rest}>
+    <Toolbar className={_styles.toolbar}>
+      <RouterLink to="/">
+        <Logo />
+      </RouterLink>
+    </Toolbar>
+  </AppBar>
+);
+
+const DashboardLayoutTopBar = (onMobileNavOpen: any, ...rest: any) => {
+  const [notifications] = useState([]);
+
+  return (
+    <AppBar className={clsx(_styles.root, _styles)} elevation={0} {...rest}>
+      <Toolbar>
+        <RouterLink to="/">
+          <Logo />
+        </RouterLink>
+        <Box flexGrow={1} />
+        <Hidden mdDown>
+          <IconButton color="inherit">
+            <Badge
+              badgeContent={notifications.length}
+              color="primary"
+              variant="dot"
+            >
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <IconButton color="inherit">
+            <InputIcon />
+          </IconButton>
+        </Hidden>
+        <Hidden lgUp>
+          <IconButton color="inherit" onClick={onMobileNavOpen}>
+            <MenuIcon />
+          </IconButton>
+        </Hidden>
+      </Toolbar>
+    </AppBar>
+  );
+};

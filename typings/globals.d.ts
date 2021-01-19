@@ -1,6 +1,15 @@
+declare interface IPackage {
+  homepage: string;
+}
+
+declare interface IPath {
+  IMAGES: string;
+}
+
 declare interface IGlobals {
   TITLE: string;
-  PACKAGE: object;
+  PACKAGE: IPackage;
+  PATH: IPath;
 }
 
 declare const GLOBALS: IGlobals;

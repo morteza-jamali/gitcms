@@ -1,9 +1,11 @@
 import React from 'react';
 import Head from 'next/head';
-import { AppProps } from 'next/app';
 import CssBaseline from '@material-ui/core/CssBaseline';
-//import i18n from 'i18next';
-//import { initReactI18next } from 'react-i18next';
+import index from '../theme/default/index';
+import { AppProps } from 'next/app';
+import { ThemeProvider } from '@material-ui/core/styles';
+//import i18n from "i18next";
+//import { initReactI18next } from "react-i18next";
 //import i18n_en from "../i18n/en";
 
 /*i18n.use(initReactI18next).init({
@@ -39,9 +41,11 @@ export default function MyApp(props: AppProps) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-      <CssBaseline />
-      <Component {...pageProps} />
+      <ThemeProvider theme={index}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <Component {...pageProps} />
+      </ThemeProvider>
     </React.Fragment>
   );
 }

@@ -36,11 +36,12 @@
     "yup": "^0.29.3"
   },
   "devDependencies": {
-    "prettier": "^1.19.1",
     "@types/next": "latest",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@types/react-helmet": "^6.1.0",
+    "prettier": "^1.19.1",
     "typescript": "latest"
   }
 }

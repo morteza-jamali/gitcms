@@ -2,26 +2,29 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/",
-        destination: "/dashboard/dashboard",
-      },
+        source: '/',
+        destination: '/dashboard/dashboard'
+      }
     ];
   },
   webpack: (config, { webpack }) => {
     config.plugins.push(
       new webpack.ProvidePlugin({
-        React: "react",
+        React: 'react'
       }),
       new webpack.DefinePlugin({
         GLOBALS: JSON.stringify({
-          TITLE: "GitCMS",
-          PACKAGE: {
-            homepage: "https://github.com/morteza-jamali/gitcms#readme",
+          TITLE: 'GitCMS',
+          PATH: {
+            IMAGES: '/images'
           },
-        }),
+          PACKAGE: {
+            homepage: 'https://github.com/morteza-jamali/gitcms#readme'
+          }
+        })
       })
     );
 
     return config;
-  },
+  }
 };
