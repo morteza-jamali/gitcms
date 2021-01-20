@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import styles from './TopBar.style';
 import Logo from '../Logo/Logo';
 import MenuIcon from '@material-ui/icons/Menu';
-import PropTypes from 'prop-types';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import {
@@ -19,23 +18,38 @@ import { Link as RouterLink } from 'react-router-dom';
 
 let _styles: any;
 
-export function TopBar(
-  layout: 'MAIN' | 'DASHBOARD',
-  onMobileNavOpen: typeof PropTypes.func = PropTypes.func,
+declare interface ITopBarPropsType {
+  layout: 'MAIN' | 'DASHBOARD';
+  onMobileNavOpen?: any;
+  className?: any;
+}
+
+const TopBarPropsDefaultValue: ITopBarPropsType = {
+  layout: 'MAIN',
+  onMobileNavOpen: () => {},
+  className: ''
+};
+
+export default function TopBar(
+  props: ITopBarPropsType = TopBarPropsDefaultValue,
   ...rest: any
 ) {
-  _styles = makeStyles(styles(layout))();
+  _styles = makeStyles(styles(props.layout))();
 
-  switch (layout) {
+  switch (props.layout) {
     case 'MAIN':
-      return MainLayoutTopBar(rest);
+      return MainLayoutTopBar(props.className, rest);
     case 'DASHBOARD':
-      return DashboardLayoutTopBar(onMobileNavOpen, rest);
+      return DashboardLayoutTopBar(
+        props.className,
+        props.onMobileNavOpen,
+        rest
+      );
   }
 }
 
-const MainLayoutTopBar = (...rest: any) => (
-  <AppBar className={clsx(_styles.root, _styles)} elevation={0} {...rest}>
+const MainLayoutTopBar = (className: string, ...rest: any) => (
+  <AppBar className={clsx(_styles.root, className)} elevation={0} {...rest}>
     <Toolbar className={_styles.toolbar}>
       <RouterLink to="/">
         <Logo />
@@ -44,11 +58,15 @@ const MainLayoutTopBar = (...rest: any) => (
   </AppBar>
 );
 
-const DashboardLayoutTopBar = (onMobileNavOpen: any, ...rest: any) => {
+const DashboardLayoutTopBar = (
+  className: string,
+  onMobileNavOpen: any,
+  ...rest: any
+) => {
   const [notifications] = useState([]);
 
   return (
-    <AppBar className={clsx(_styles.root, _styles)} elevation={0} {...rest}>
+    <AppBar className={clsx(_styles.root, className)} elevation={0} {...rest}>
       <Toolbar>
         <RouterLink to="/">
           <Logo />
