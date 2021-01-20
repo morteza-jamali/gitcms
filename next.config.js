@@ -1,12 +1,4 @@
 module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: '/',
-        destination: '/dashboard/dashboard'
-      }
-    ];
-  },
   webpack: (config, { webpack }) => {
     config.plugins.push(
       new webpack.ProvidePlugin({

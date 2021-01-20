@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import moment from 'moment';
-import { v4 as uuid } from 'uuid';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import PropTypes from 'prop-types';
+import styles from './LatestOrders.style';
+import { v4 as uuid } from 'uuid';
 import {
   Box,
   Button,
@@ -22,7 +22,7 @@ import {
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
-const data = [
+const data: any[] = [
   {
     id: uuid(),
     ref: 'CDD1049',
@@ -85,22 +85,12 @@ const data = [
   }
 ];
 
-const useStyles = makeStyles(() => ({
-  root: {},
-  actions: {
-    justifyContent: 'flex-end'
-  }
-}));
-
-const LatestOrders = ({ className, ...rest }) => {
-  const classes = useStyles();
+export default function LatestOrders(className: any, ...rest: any) {
+  const _styles = makeStyles(styles())();
   const [orders] = useState(data);
 
   return (
-    <Card
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
+    <Card className={clsx(_styles.root, className)} {...rest}>
       <CardHeader title="Latest Orders" />
       <Divider />
       <PerfectScrollbar>
@@ -108,51 +98,28 @@ const LatestOrders = ({ className, ...rest }) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>
-                  Order Ref
-                </TableCell>
-                <TableCell>
-                  Customer
-                </TableCell>
+                <TableCell>Order Ref</TableCell>
+                <TableCell>Customer</TableCell>
                 <TableCell sortDirection="desc">
-                  <Tooltip
-                    enterDelay={300}
-                    title="Sort"
-                  >
-                    <TableSortLabel
-                      active
-                      direction="desc"
-                    >
+                  <Tooltip enterDelay={300} title="Sort">
+                    <TableSortLabel active direction="desc">
                       Date
                     </TableSortLabel>
                   </Tooltip>
                 </TableCell>
-                <TableCell>
-                  Status
-                </TableCell>
+                <TableCell>Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.map((order) => (
-                <TableRow
-                  hover
-                  key={order.id}
-                >
-                  <TableCell>
-                    {order.ref}
-                  </TableCell>
-                  <TableCell>
-                    {order.customer.name}
-                  </TableCell>
+              {orders.map(order => (
+                <TableRow hover key={order.id}>
+                  <TableCell>{order.ref}</TableCell>
+                  <TableCell>{order.customer.name}</TableCell>
                   <TableCell>
                     {moment(order.createdAt).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell>
-                    <Chip
-                      color="primary"
-                      label={order.status}
-                      size="small"
-                    />
+                    <Chip color="primary" label={order.status} size="small" />
                   </TableCell>
                 </TableRow>
               ))}
@@ -160,11 +127,7 @@ const LatestOrders = ({ className, ...rest }) => {
           </Table>
         </Box>
       </PerfectScrollbar>
-      <Box
-        display="flex"
-        justifyContent="flex-end"
-        p={2}
-      >
+      <Box display="flex" justifyContent="flex-end" p={2}>
         <Button
           color="primary"
           endIcon={<ArrowRightIcon />}
@@ -176,10 +139,4 @@ const LatestOrders = ({ className, ...rest }) => {
       </Box>
     </Card>
   );
-};
-
-LatestOrders.propTypes = {
-  className: PropTypes.string
-};
-
-export default LatestOrders;
+}

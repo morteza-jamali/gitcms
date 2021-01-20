@@ -1,6 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
+import styles from './TraficByDevice.style';
+import LaptopMacIcon from '@material-ui/icons/LaptopMac';
+import PhoneIcon from '@material-ui/icons/Phone';
+import TabletIcon from '@material-ui/icons/Tablet';
 import { Doughnut } from 'react-chartjs-2';
 import {
   Box,
@@ -13,18 +16,9 @@ import {
   makeStyles,
   useTheme
 } from '@material-ui/core';
-import LaptopMacIcon from '@material-ui/icons/LaptopMac';
-import PhoneIcon from '@material-ui/icons/Phone';
-import TabletIcon from '@material-ui/icons/Tablet';
 
-const useStyles = makeStyles(() => ({
-  root: {
-    height: '100%'
-  }
-}));
-
-const TrafficByDevice = ({ className, ...rest }) => {
-  const classes = useStyles();
+export default function TrafficByDevice(className: any = '', ...rest: any) {
+  const _styles = makeStyles(styles())();
   const theme = useTheme();
 
   const data = {
@@ -88,51 +82,22 @@ const TrafficByDevice = ({ className, ...rest }) => {
   ];
 
   return (
-    <Card
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
+    <Card className={clsx(_styles.root, className)} {...rest}>
       <CardHeader title="Traffic by Device" />
       <Divider />
       <CardContent>
-        <Box
-          height={300}
-          position="relative"
-        >
-          <Doughnut
-            data={data}
-            options={options}
-          />
+        <Box height={300} position="relative">
+          <Doughnut data={data} options={options} />
         </Box>
-        <Box
-          display="flex"
-          justifyContent="center"
-          mt={2}
-        >
-          {devices.map(({
-            color,
-            icon: Icon,
-            title,
-            value
-          }) => (
-            <Box
-              key={title}
-              p={1}
-              textAlign="center"
-            >
+        <Box display="flex" justifyContent="center" mt={2}>
+          {devices.map(({ color, icon: Icon, title, value }) => (
+            <Box key={title} p={1} textAlign="center">
               <Icon color="action" />
-              <Typography
-                color="textPrimary"
-                variant="body1"
-              >
+              <Typography color="textPrimary" variant="body1">
                 {title}
               </Typography>
-              <Typography
-                style={{ color }}
-                variant="h2"
-              >
-                {value}
-                %
+              <Typography style={{ color }} variant="h2">
+                {value}%
               </Typography>
             </Box>
           ))}
@@ -140,10 +105,4 @@ const TrafficByDevice = ({ className, ...rest }) => {
       </CardContent>
     </Card>
   );
-};
-
-TrafficByDevice.propTypes = {
-  className: PropTypes.string
-};
-
-export default TrafficByDevice;
+}

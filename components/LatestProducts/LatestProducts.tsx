@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
-import { v4 as uuid } from 'uuid';
 import moment from 'moment';
+import styles from './LatestProducts.style';
+import { v4 as uuid } from 'uuid';
 import {
   Box,
   Button,
@@ -23,54 +23,41 @@ const data = [
   {
     id: uuid(),
     name: 'Dropbox',
-    imageUrl: '/static/images/products/product_1.png',
+    imageUrl: `${GLOBALS.PATH.IMAGES}/products/product_1.png`,
     updatedAt: moment().subtract(2, 'hours')
   },
   {
     id: uuid(),
     name: 'Medium Corporation',
-    imageUrl: '/static/images/products/product_2.png',
+    imageUrl: `${GLOBALS.PATH.IMAGES}/products/product_2.png`,
     updatedAt: moment().subtract(2, 'hours')
   },
   {
     id: uuid(),
     name: 'Slack',
-    imageUrl: '/static/images/products/product_3.png',
+    imageUrl: `${GLOBALS.PATH.IMAGES}/products/product_3.png`,
     updatedAt: moment().subtract(3, 'hours')
   },
   {
     id: uuid(),
     name: 'Lyft',
-    imageUrl: '/static/images/products/product_4.png',
+    imageUrl: `${GLOBALS.PATH.IMAGES}/products/product_4.png`,
     updatedAt: moment().subtract(5, 'hours')
   },
   {
     id: uuid(),
     name: 'GitHub',
-    imageUrl: '/static/images/products/product_5.png',
+    imageUrl: `${GLOBALS.PATH.IMAGES}/products/product_5.png`,
     updatedAt: moment().subtract(9, 'hours')
   }
 ];
 
-const useStyles = makeStyles(({
-  root: {
-    height: '100%'
-  },
-  image: {
-    height: 48,
-    width: 48
-  }
-}));
-
-const LatestProducts = ({ className, ...rest }) => {
-  const classes = useStyles();
+export default function LatestProducts(className: any = '', ...rest: any) {
+  const _styles = makeStyles(styles())();
   const [products] = useState(data);
 
   return (
-    <Card
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
+    <Card className={clsx(_styles.root, className)} {...rest}>
       <CardHeader
         subtitle={`${products.length} in total`}
         title="Latest Products"
@@ -78,14 +65,11 @@ const LatestProducts = ({ className, ...rest }) => {
       <Divider />
       <List>
         {products.map((product, i) => (
-          <ListItem
-            divider={i < products.length - 1}
-            key={product.id}
-          >
+          <ListItem divider={i < products.length - 1} key={product.id}>
             <ListItemAvatar>
               <img
                 alt="Product"
-                className={classes.image}
+                className={_styles.image}
                 src={product.imageUrl}
               />
             </ListItemAvatar>
@@ -93,21 +77,14 @@ const LatestProducts = ({ className, ...rest }) => {
               primary={product.name}
               secondary={`Updated ${product.updatedAt.fromNow()}`}
             />
-            <IconButton
-              edge="end"
-              size="small"
-            >
+            <IconButton edge="end" size="small">
               <MoreVertIcon />
             </IconButton>
           </ListItem>
         ))}
       </List>
       <Divider />
-      <Box
-        display="flex"
-        justifyContent="flex-end"
-        p={2}
-      >
+      <Box display="flex" justifyContent="flex-end" p={2}>
         <Button
           color="primary"
           endIcon={<ArrowRightIcon />}
@@ -119,10 +96,4 @@ const LatestProducts = ({ className, ...rest }) => {
       </Box>
     </Card>
   );
-};
-
-LatestProducts.propTypes = {
-  className: PropTypes.string
-};
-
-export default LatestProducts;
+}

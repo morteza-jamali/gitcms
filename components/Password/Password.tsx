@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import styles from './Password.style';
 import {
   Box,
   Button,
@@ -12,18 +12,14 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-const useStyles = makeStyles(({
-  root: {}
-}));
-
-const Password = ({ className, ...rest }) => {
-  const classes = useStyles();
+export default function Password(className: any = '', ...rest: any) {
+  const _styles = makeStyles(styles())();
   const [values, setValues] = useState({
     password: '',
     confirm: ''
   });
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     setValues({
       ...values,
       [event.target.name]: event.target.value
@@ -31,15 +27,9 @@ const Password = ({ className, ...rest }) => {
   };
 
   return (
-    <form
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
+    <form className={clsx(_styles.root, className)} {...rest}>
       <Card>
-        <CardHeader
-          subheader="Update password"
-          title="Password"
-        />
+        <CardHeader subheader="Update password" title="Password" />
         <Divider />
         <CardContent>
           <TextField
@@ -64,25 +54,12 @@ const Password = ({ className, ...rest }) => {
           />
         </CardContent>
         <Divider />
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          p={2}
-        >
-          <Button
-            color="primary"
-            variant="contained"
-          >
+        <Box display="flex" justifyContent="flex-end" p={2}>
+          <Button color="primary" variant="contained">
             Update
           </Button>
         </Box>
       </Card>
     </form>
   );
-};
-
-Password.propTypes = {
-  className: PropTypes.string
-};
-
-export default Password;
+}
